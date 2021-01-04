@@ -1,11 +1,12 @@
 <template>
-  <div class="score">
+  <div class="character">
     <div ref="monster" :class="['dragon', takeStatus]" @click="doAttack"></div>
+    <p class="damage">{{damage}}</p>
     <h1>{{ monsterName }}</h1>
-    <div class="life-bar">
+    <div class="life-bar" :class="{'d-none': life < 1}">
       <div
         class="life"
-        :class="{ danger: life < 20 }"
+        :class="{ 'life--warning': life < 40 , 'life--danger': life < 20 }"
         :style="{ width: life + '%' }"
       ></div>
     </div>
@@ -36,6 +37,9 @@ export default {
     },
     life: {
       type: Number
+    },
+    damage: {
+      type: String
     }
   },
   mounted () {
@@ -68,7 +72,7 @@ export default {
 
 <style lang="sass" scoped>
 .dragon
-  background-image: url('../assets/sprite.png')
+  background-image: url('../assets/sprite-dragon.png')
   width: 323px
   height: 250px
   transform: scaleX(-1)
@@ -82,7 +86,7 @@ export default {
 
   &--hurt
     background-position-y: -495px
-    animation: hurt 1200ms steps(2) infinite
+    animation: hurt 1200ms steps(2) 200ms infinite
 
   &--death
     background-position-y: -742px
@@ -92,22 +96,37 @@ export default {
     background-position: -1305px -742px
     opacity: 0.5
 
-  @keyframes iddle
-    to
-      background-position-x: -975px
+.damage
+  position: absolute
+  bottom: 30%
+  right: 20%
+  font-size: 2em
+  color: #D32F2F
+  text-shadow: 2px 2px 3px black
+  animation: damage 1200ms forwards
 
-  @keyframes attack
-    to
-      background-position-x: -1305px
+@keyframes damage
+  to
+    bottom: 45%
+    font-size: 4em
+    opacity: 0.8
 
-  @keyframes hurt
-    to
-      background-position-x: -658px
-      opacity: 0.7
+@keyframes iddle
+  to
+    background-position-x: -975px
 
-  @keyframes death
-    to
-      background-position-x: -1630px
-      opacity: 0.5
+@keyframes attack
+  to
+    background-position-x: -1305px
+
+@keyframes hurt
+  to
+    background-position-x: -658px
+    opacity: 0.7
+
+@keyframes death
+  to
+    background-position-x: -1630px
+    opacity: 0.5
 
 </style>

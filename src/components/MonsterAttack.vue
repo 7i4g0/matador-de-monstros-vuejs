@@ -12,9 +12,9 @@ export default {
 .fire
   position: absolute
   z-index: 2
-  top: 110px
-  right: 80px
-  background-image: url('../assets/sprite.png')
+  top: 95px
+  right: 215px
+  background-image: url('../assets/sprite-dragon.png')
   background-position-x: 120px
   background-position-y: bottom
   width: 127px
@@ -26,8 +26,8 @@ export default {
 
   @keyframes default_animation
     to
+      top: 150px
       background-position-x: -654px
-      right: 100%
-      transform: scaleX(-1)
+      left: 60px
   
 </style>
