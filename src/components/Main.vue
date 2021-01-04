@@ -3,32 +3,40 @@
     <div class="screen-block">
       <h1>Vire o celular</h1>
     </div>
-    <div class="panel arena__castle">
-      <div class="container arena">
-        <the-hero :status="player.status" :life="player.life" :name="player.name" :damage="player.damage" />
-        <the-monster :status="monster.status" :life="monster.life" :damage="monster.damage" />
-        <monster-attack :class="{'play': fired}" />
+    <div class="menu" v-if="!running">
+      <div class="panel buttons">
+        <input type="text" v-model="player.name">
+        <button @click="startGame" class="btn btn__new-game"><span>Start</span></button>
       </div>
     </div>
-    <div v-if="hasResult" class="panel result">
-      <div v-if="monster.life == 0" class="win">Você ganhou!!! :)</div>
-      <div v-else class="lose">Você perdeu! :(</div>
-    </div>
-    <div class="panel buttons">
-      <template v-if="running">
-        <button @click="attack(false)" class="btn btn__attack" :disabled="actions"><span>Ataque</span></button>
-        <button @click="attack(true)" class="btn btn__special-attack" :disabled="actions"><span>Ataque Especial</span></button>
-        <button @click="healAndHurt" class="btn btn__heal" :disabled="actions"><span>Curar</span></button>
-        <button @click="running = false" class="btn btn__give-up"><span>Desistir</span></button>
-      </template>
-      <button v-else @click="startGame" class="btn btn__new-game"><span>Start</span></button>
-    </div>
-    <div v-if="logs.length" class="panel logs">
-      <ul>
-        <li v-for="log in logs" :key="log.id" :class="log.cls" class="log">
-          {{ log.text }}
-        </li>
-      </ul>
+    <div class="game" v-else>
+      <div class="panel arena__castle">
+        <div class="container arena">
+          <the-hero :status="player.status" :life="player.life" :name="player.name" :damage="player.damage" />
+          <the-monster :status="monster.status" :life="monster.life" :damage="monster.damage" />
+          <monster-attack :class="{'play': fired}" />
+        </div>
+      </div>
+      <div v-if="hasResult" class="panel result">
+        <div v-if="monster.life == 0" class="win">Você ganhou!!! :)</div>
+        <div v-else class="lose">Você perdeu! :(</div>
+      </div>
+      <div class="panel buttons">
+        <template>
+          <button @click="attack(false)" class="btn btn__attack" :disabled="actions"><span>Ataque</span></button>
+          <button @click="attack(true)" class="btn btn__special-attack" :disabled="actions"><span>Ataque Especial</span></button>
+          <button @click="healAndHurt" class="btn btn__heal" :disabled="actions"><span>Curar</span></button>
+          <button @click="running = false" class="btn btn__give-up"><span>Desistir</span></button>
+        </template>
+        
+      </div>
+      <div v-if="logs.length" class="panel logs">
+        <ul>
+          <li v-for="log in logs" :key="log.id" :class="log.cls" class="log">
+            {{ log.text }}
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
